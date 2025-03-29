@@ -1,12 +1,15 @@
 #include "Mascota.h"
-
+/**
+ * @brief Inicio del pograma
+ */
 int main() {
-    SetConsoleOutputCP(CP_UTF8);
     int opcion;
-    string nombreMascota;
+    //Para inicializar el nombre de la mascota
+    string nombreMascota; 
     
-    Mascota perro(nombreMascota, 0, 0, 0);
-    perro.set_energia(50); perro.set_hambre(50); perro.set_felicidad(50);
+    //Esta es nuestra mascota 
+    Mascota perro(nombreMascota, 0, 0, 0); //Inicializamos los atributos
+    perro.set_energia(50); perro.set_hambre(50); perro.set_felicidad(50); //establecemos el punto de partida 
 
     cout << "Ingrese el nombre de su perrito mascota: ";
     cin >> nombreMascota; perro.set_nombre(nombreMascota);
@@ -15,22 +18,23 @@ int main() {
     do {
         perro.limpiar_pantalla();
         perro.estado_de_la_mascota();
-        cout << "\n Hola soy " << nombreMascota << " ¿que vamos a hacer hoy? ▼(´ᴥ`)▼" << endl;
-        cout << "╔══════════════════════════╗\n"
-             << "║       MENÚ PRINCIPAL     ║\n"
-             << "╠══════════════════════════╣\n"
-             << "║ 1. Comer  (^o^)          ║\n"
-             << "║ 2. Jugar  (^-^)          ║\n"
-             << "║ 3. Dormir (-_-)          ║\n"
-             << "║ 4. Salir                 ║\n"
-             << "╚══════════════════════════╝\n";
-        cout << "Opcion: \n"; cin >> opcion;
+        cout << "\n Hola soy " << nombreMascota << " que vamos a hacer hoy? " << endl;
+        cout << " __________________________\n"
+             << "|       MENU PRINCIPAL     |     / \\__\n"
+             << "|__________________________|   ( o.o )\\____\n"  
+             << "| 1. Comer  (^o^)          |    /    ) O\n"
+             << "| 2. Jugar  (^-^)          |   /   (_____/\n"
+             << "| 3. Dormir (-_-)          |   \\_/   U\n"
+             << "| 4. Salir                 |\n"
+             << "|__________________________|\n";
+
+        cout << "Opcion: "; cin >> opcion;
 
         //Validamos la entrada
         if (cin.fail()) {
             cin.clear(); 
             cin.ignore(10000, '\n');
-            cout << "Entrada inválida. Inténtalo de nuevo.\n"; cin.get();
+            cout << "Entrada invalida. Intentalo de nuevo.\n"; cin.get();
             continue;
         }
         switch (opcion) {
@@ -44,7 +48,7 @@ int main() {
             perro.dormir();
             break;
         case 4:
-            cout << "Nos vemos pronto （⌒▽⌒）" << endl;
+            cout << "Nos vemos pronto..." << endl;
             break;
         default:
             cout << "Intentalo de nuevo" << endl;
@@ -55,3 +59,4 @@ int main() {
 
     return 0;
 }
+//FIN 
