@@ -17,16 +17,16 @@ public:
     Mascota(string, int, int, int);
 
     // Getters
-    string getNombre() const;
-    int getEnergia();
-    int getHambre();
-    int getFelicidad();
+    string get_nombre() const;
+    int get_energia();
+    int get_hambre();
+    int get_felicidad();
 
     // Setters individuales con validaciones
-    void setNombre(string);
-    void setEnergia(int); 
-    void setHambre(int);
-    void setFelicidad(int);
+    void set_nombre(string);
+    void set_energia(int); 
+    void set_hambre(int);
+    void set_felicidad(int);
     //Metodos de la Mascota
     void estado_de_la_mascota();
     void comer();
@@ -44,25 +44,25 @@ Mascota::Mascota(string _nombre, int _energia, int _hambre, int _felicidad) {
 }
 
 // Getters
-string getNombre(string nombre) { return nombre; }
-int getEnergia(int energia) { return energia; }
-int getHambre(int hambre) { return hambre; }
-int getFelicidad(int felicidad) { return felicidad; }
+string get_nombre(string nombre) { return nombre; }
+int get_energia(int energia) { return energia; }
+int get_hambre(int hambre) { return hambre; }
+int get_felicidad(int felicidad) { return felicidad; }
 
-void Mascota::setNombre(string _nombre) { 
+void Mascota::set_nombre(string _nombre) { 
     Mascota::nombre = _nombre; 
 }
-void Mascota::setEnergia(int nuevaEnergia) { 
+void Mascota::set_energia(int nuevaEnergia) { 
     if (nuevaEnergia < 0) Mascota::energia = 0; 
     else if (nuevaEnergia > 100) Mascota::energia = 100;
     else Mascota::energia = nuevaEnergia;
 }
-void Mascota::setHambre(int nuevoHambre) { 
+void Mascota::set_hambre(int nuevoHambre) { 
     if (nuevoHambre < 0) Mascota::hambre = 0;   // Evita valores negativos
     else if (nuevoHambre > 100) Mascota::hambre = 100; // Límite máximo
     else Mascota::hambre = nuevoHambre;
 }    
-void Mascota::setFelicidad(int nuevaFelicidad) { 
+void Mascota::set_felicidad(int nuevaFelicidad) { 
     if (nuevaFelicidad < 0) Mascota::felicidad = 0;
     else if (nuevaFelicidad > 100) Mascota::felicidad = 100;
     else Mascota::felicidad = nuevaFelicidad;
@@ -106,10 +106,10 @@ void Mascota::comer() {
     }
 
     switch (opcion) {
-        case 1: setHambre(hambre - 10); setEnergia(energia + 10); break;
-        case 2: setHambre(hambre - 30); setEnergia(energia + 30); break;
-        case 3: setHambre(hambre - 5); setEnergia(energia + 5); break;
-        case 4: setHambre(hambre - 50); setEnergia(energia + 50); break;
+        case 1: set_hambre(hambre - 10); set_energia(energia + 10); break;
+        case 2: set_hambre(hambre - 30); set_energia(energia + 30); break;
+        case 3: set_hambre(hambre - 5); set_energia(energia + 5); break;
+        case 4: set_hambre(hambre - 50); set_energia(energia + 50); break;
         default:
             cout << "Opción no válida. Inténtalo de nuevo (Presiona 'Enter' para continuar...\n";
             cin.ignore(); cin.get();
@@ -137,11 +137,11 @@ void Mascota::jugar() {
     }
     switch (opcion) {
     case 1:
-        setFelicidad(felicidad + 30); setHambre(hambre +10); setEnergia(energia - 25);break;
+        set_felicidad(felicidad + 30); set_hambre(hambre +10); set_energia(energia - 25);break;
     case 2: 
-        setFelicidad(felicidad + 40); setHambre(hambre +20); setEnergia(energia - 50);break;
+        set_felicidad(felicidad + 40); set_hambre(hambre +20); set_energia(energia - 50);break;
     case 3:
-        setFelicidad(felicidad + 20); setHambre(hambre +10); setEnergia(energia - 15);break;
+        set_felicidad(felicidad + 20); set_hambre(hambre +10); set_energia(energia - 15);break;
     default:
         cout << "\nOpcion invalida. Por favor intentalo de nuevo\n";
         break;
