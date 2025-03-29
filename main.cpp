@@ -6,10 +6,10 @@ int main() {
     string nombreMascota;
     
     Mascota perro(nombreMascota, 0, 0, 0);
-    perro.setEnergia(50); perro.setHambre(50); perro.setFelicidad(50);
+    perro.set_energia(50); perro.set_hambre(50); perro.set_felicidad(50);
 
     cout << "Ingrese el nombre de su perrito mascota: ";
-    cin >> nombreMascota; perro.setNombre(nombreMascota);
+    cin >> nombreMascota; perro.set_nombre(nombreMascota);
     cout << "\n";
 
     do {
