@@ -1,7 +1,14 @@
 #include "Mascota.h"
+
+/**
+ * @brief Evita acumulaciones. Limpia pantalla
+ */
+void limpiar_pantalla() { cout << "\033[2J\033[H"; }
+    
+
 /**
  * @brief Inicio del pograma
- */
+ */ 
 int main() {
     int opcion;
     //Para inicializar el nombre de la mascota
@@ -16,7 +23,7 @@ int main() {
     cout << "\n";
 
     do {
-        perro.limpiar_pantalla();
+        limpiar_pantalla();
         perro.estado_de_la_mascota();
         cout << "\n Hola soy " << nombreMascota << " que vamos a hacer hoy? " << endl;
         cout << " __________________________\n"
@@ -27,9 +34,9 @@ int main() {
              << "| 3. Dormir (-_-)          |   \\_/   U\n"
              << "| 4. Salir                 |\n"
              << "|__________________________|\n";
+        
 
         cout << "Opcion: "; cin >> opcion;
-
         //Validamos la entrada
         if (cin.fail()) {
             cin.clear(); 
