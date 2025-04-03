@@ -1,7 +1,7 @@
 #ifndef MASCOTA_H
 #define MASCOTA_H
 #include <iostream>
-
+#include <ctime>
 using namespace std;
 /**
  * @class Mascota
@@ -14,6 +14,9 @@ private:
     int hambre;
     int felicidad;
 
+    time_t ultimaHambre;
+    time_t ultimaEnergia;
+    time_t ultimaFelicidad;
 public:
     // Constructor
     Mascota(string, int, int, int);
@@ -34,7 +37,10 @@ public:
     void comer();
     void jugar();
     void dormir();
-    void limpiar_pantalla();
+    //Otros
+    void actualizar_estado_mascota();
+    void esperar(int);
+   
 };
 
 //Constructor de la clase Mascota
@@ -43,6 +49,9 @@ Mascota::Mascota(string _nombre, int _energia, int _hambre, int _felicidad) {
     energia = _energia;
     hambre = _hambre;
     felicidad = _felicidad;
+    time(&ultimaHambre);
+    time(&ultimaEnergia);
+    time(&ultimaFelicidad);
 }
 
 // Getters
@@ -79,28 +88,32 @@ void Mascota::set_felicidad(int nuevaFelicidad) {
     else Mascota::felicidad = nuevaFelicidad;
 }
 /**
- * @brief Método para mostrar el estado de la mascota
+ * @brief Método para mostrar y actualizar el estado de la mascota
  */
 void Mascota::estado_de_la_mascota() {
-    cout << "Nombre: " << nombre << endl
+    actualizar_estado_mascota();
+    //Este condicional hace que la mascota juegue automaticamente
+    if (felicidad <= 40) { set_felicidad(felicidad + 2); set_energia(energia - 4);
+        set_hambre(hambre + 3); cout << "\n " 
+        << nombre << " ha jugado solo!\n"; }
+    cout << "\nNombre: " << nombre << endl
          << "Energia: " << energia << endl 
          << "Hambre: " << hambre << endl
          << "Felicidad: " << felicidad << endl;
-    if (hambre > 80) cout << "\nTengo hambre (T_T)" << endl;
-    if (energia < 10) cout << "\nEstoy muy cansado (-_-)" << endl;
-    if (felicidad < 10) cout << "\nJuguemos (^o^)" << endl;
+    if (hambre >= 80) cout << "\nTengo hambre (T_T)" << endl;
+    if (energia <= 10) cout << "\nEstoy muy cansado (-_-)" << endl;
+    if (felicidad <= 15) cout << "\nJuguemos (^o^)" << endl;
 }
 /**
  * @brief Permite seleccionar que alimento dar a la mascota
- * @return Para regresar al menu principal
+ * @return al menu principal
  */
 void Mascota::comer() {
     int opcion; //Variable para manejar la opcion del usuario
     
     if (hambre == 0) { //Verificar que no sea 0 antes de comer
         cout << "\nTu mascota no tiene hambre en este momento. Vuelve mas tarde \n Presiona Enter para continuar... \n";
-        cin.ignore();
-        cin.get();
+        esperar(2000);
         return;
     }
     
@@ -127,12 +140,11 @@ void Mascota::comer() {
         case 3: set_hambre(hambre - 5); set_energia(energia + 5); break;
         case 4: set_hambre(hambre - 50); set_energia(energia + 50); break;
         default:
-            cout << "Opcion no valida. Intentalo de nuevo (Presiona 'Enter' para continuar...\n";
-            cin.ignore(); cin.get();
+            cout << "Opcion no valida. Intentalo de nuevo...\n";
+            esperar(2000);
             break;
     }
-    cout << "\nGracias por alimentarme (^o^)\n"; cout << "Presiona 'Enter' para continuar...\n";
-    cin.ignore(); cin.get();
+    cout << "\nGracias por alimentarme (^o^)\n"; esperar(2000);
 }
 /**
  * @brief Permite jugar con la mascota
@@ -170,15 +182,33 @@ void Mascota::jugar() {
  * @brief Permite recuperar energias durmiendo
  */
 void Mascota::dormir() {
-    if (energia == 100) { cout << nombre << " no tiene sueño... "; cin.ignore(); cin.get(); return; }
+    if (energia == 100) { cout << nombre << " no tiene sueño... "; esperar(3000); return; }
     cout << nombre << " esta durmiendo..." << endl;
     energia = 100; //si tiene las energias al 100 no tiene por qué dormir
-    cout << "Presiona Enter para continuar";
-    cin.ignore();
-    cin.get();
+    esperar(2000);
 }
-/**
- * @brief Evita acumulaciones. Limpia pantalla
+/** 
+ * @brief Permite que la mascota interactue 
+ * automaticamente conforme al tiempo
  */
-void Mascota::limpiar_pantalla() { cout << "\033[2J\033[H"; }
+void Mascota::actualizar_estado_mascota() {
+    time_t ahora;
+    time(&ahora); //Tiempo real
+    if (difftime(ahora, ultimaHambre) >= 5.0) { //si pasan 5 segundos aumentar hambre
+        set_hambre(hambre + 5);
+        time(&ultimaHambre); //Se reinicia 
+    }
+    if (difftime(ahora, ultimaEnergia) >= 5.0) {
+        set_energia(energia - 5);
+        time(&ultimaEnergia);
+    }
+    if (difftime(ahora, ultimaFelicidad) >=5.0) {
+        set_felicidad(felicidad - 5);
+        time(&ultimaFelicidad);
+    }
+}
+/** 
+ * @brief Permite realizar pausas en el tiempo
+*/
+void Mascota::esperar(int ms) { for(clock_t t=clock(); (clock()-t)*1000/CLOCKS_PER_SEC < ms;); }
 #endif
